@@ -8,7 +8,11 @@ from datetime import datetime
 import json
 import re
 from collections import Counter
-import matplotlib.pyplot as plt
+
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    plt = None
 
 try:
     from wordcloud import WordCloud
@@ -122,7 +126,7 @@ def load_history():
 # VISUALIZATION
 # ============================================================
 def render_wordcloud(keywords, title):
-    if not keywords or WordCloud is None:
+    if not keywords or WordCloud is None or plt is None:
         return
     wc = WordCloud(width=700, height=350, background_color="white", colormap="viridis").generate(" ".join(keywords))
     fig, ax = plt.subplots(figsize=(8, 4))
